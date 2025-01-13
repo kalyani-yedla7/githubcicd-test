@@ -34,4 +34,4 @@ jobs:
         run: |
           mvn deploy --settings .maven/settings.xml -DskipMunitTests -DmuleDeploy \
           -Dusername="${{ secrets.anypoint_platform_username }}" \
-          -Dpassword="${{ secrets.anypoint_platform_username }}" \
+          -Dpassword="${{ secrets.anypoint_platform_password }}" \
