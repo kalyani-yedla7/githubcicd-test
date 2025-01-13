@@ -24,14 +24,17 @@ jobs:
           distribution: "zulu"
           java-version: 8
       
-      - name: Publish to Exchange
+      - name: Deploy to Exchange
         run: |
-          mvn deploy --settings .maven/settings.xml -DskipMunitTests \
-          -Dusername="${{ secrets.anypoint_platform_username }}" \
-          -Dpassword="${{ secrets.anypoint_platform_password }}"
+          artifactName=$(ls *.jar | head -1) 
+          mkdir -p logs
+          mvn clean deploy --settings .maven/settings.xml -DskipMunitTests \
+           -Dmule.artifact=$artifactName \
+           -Dusername="${{ secrets.ANYPOINT_PLATFORM_USERNAME }}" \
+           -Dpassword="${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}"
 
       - name: Deploy to CloudHub 2.0
         run: |
           mvn deploy --settings .maven/settings.xml -DskipMunitTests -DmuleDeploy \
-          -Dusername="${{ secrets.anypoint_platform_username }}" \
-          -Dpassword="${{ secrets.anypoint_platform_password }}" \
+          -Dusername="${{ secrets.ANYPOINT_PLATFORM_USERNAME }}" \
+          -Dpassword="${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}" \
