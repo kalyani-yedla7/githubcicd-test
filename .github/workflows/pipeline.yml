@@ -1,4 +1,4 @@
-name: Publish to Exchange & Deploy to CH 2.0
+name: Build and Deploy to Cloudhub 2.0
 
 on:
   push:
@@ -22,6 +22,8 @@ jobs:
       with:
         distribution: 'zulu'
         java-version: 8
+    - name: Test with Maven
+      run: mvn test --settings .maven/settings.xml
 
   build:
     needs: test
@@ -54,6 +56,11 @@ jobs:
       with:
           name: artifacts
           path: target/*.jar
+    - name: Publish to Exchange
+      run: |
+          mvn deploy --settings .maven/settings.xml -DskipMunitTests \
+          -Dusername="${{ secrets.anypoint_platform_username }}" \
+          -Dpassword="${{ secrets.anypoint_platform_username }}"
         
   deploy:
     needs: build
@@ -71,14 +78,13 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: artifacts
-    - name: Publish to Exchange
+    - name: Deploy to Sandbox
+      env:
+        username: ${{ secrets.anypoint_platform_username }}
+        password: ${{ secrets.anypoint_platform_password }}
       run: |
-          mvn deploy --settings .maven/settings.xml -DskipMunitTests \
-          -Dusername="${{ secrets.anypoint_platform_username }}" \
-          -Dpassword="${{ secrets.anypoint_platform_username }}"
-
-    - name: Deploy to CloudHub 2.0
-      run: |
-          mvn deploy --settings .maven/settings.xml -DskipMunitTests -DmuleDeploy \
-          -Dusername="${{ secrets.anypoint_platform_username }}" \
-          -Dpassword="${{ secrets.anypoint_platform_password }}" \
+        artifactName=$(ls *.jar | head -1)
+        mvn deploy -DskipMunitTests -DmuleDeploy \
+         -Dmule.artifact=$artifactName \
+         -Dusername="$username" \
+         -Dpassword="$password" \
