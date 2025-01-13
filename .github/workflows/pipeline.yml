@@ -82,7 +82,7 @@ jobs:
         password: ${{ secrets.anypoint.platform.password }}
       run: |
         artifactName=$(ls *.jar | head -1)
-        mvn deploy -DskipMunitTests -DmuleDeploy \
+        mvn deploy --settings .maven/settings.xml -DskipMunitTests -DmuleDeploy \
          -Dmule.artifact=$artifactName \
          -Dusername="$username" \
          -Dpassword="$password" \
