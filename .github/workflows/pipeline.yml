@@ -76,13 +76,14 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: artifacts
-    - name: Deploy to Sandbox
-      env:
-        username: ${{ secrets.anypoint_platform_username }}
-        password: ${{ secrets.anypoint_platform_password }}
+    - name: Publish to Exchange
       run: |
-        artifactName=$(ls *.jar | head -1)
-        mvn deploy --settings .maven/settings.xml -DskipMunitTests -DmuleDeploy \
-         -Dmule.artifact=$artifactName \
-         -Dusername="$username" \
-         -Dpassword="$password" \
+          mvn deploy --settings .maven/settings.xml -DskipMunitTests \
+          -Dusername="${{ secrets.anypoint_platform_username }}" \
+          -Dpassword="${{ secrets.anypoint_platform_username }}"
+
+    - name: Deploy to CloudHub 2.0
+      run: |
+          mvn deploy --settings .maven/settings.xml -DskipMunitTests -DmuleDeploy \
+          -Dusername="${{ secrets.anypoint_platform_username }}" \
+          -Dpassword="${{ secrets.anypoint_platform_password }}" \
