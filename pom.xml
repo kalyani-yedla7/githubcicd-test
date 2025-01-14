@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>42ed0e69-20eb-47e7-8b6f-89d6d3eb26cb</groupId>
+	<groupId>6724dcdb-a338-4a2c-95b3-f1ad9e76106e</groupId>
 	<!-- make sure to add your business group ID here -->
 	<artifactId>githubcicd-test</artifactId> 
-	<version>1.0.9</version>
+	<version>1.0.10</version>
 	<!-- this has to change EVERY TIME you want to re-deploy -->
 	<packaging>mule-application</packaging>
 	<name>githubcicd-test</name>
