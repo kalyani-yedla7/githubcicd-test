@@ -4,7 +4,7 @@
 	<groupId>42ed0e69-20eb-47e7-8b6f-89d6d3eb26cb</groupId>
 	<!-- make sure to add your business group ID here -->
 	<artifactId>githubcicd-test</artifactId> 
-	<version>1.0.8</version>
+	<version>1.0.9</version>
 	<!-- this has to change EVERY TIME you want to re-deploy -->
 	<packaging>mule-application</packaging>
 	<name>githubcicd-test</name>
